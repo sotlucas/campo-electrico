@@ -10,21 +10,22 @@ let resSlider;
 
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
-  //canvas.mousePressed(mousePressedOnCanvas);
+  canvas.mousePressed(mousePressedOnCanvas);
   cargas = [
     new Carga(createVector(width / 2 - 50, height / 2), 30),
     new Carga(createVector(width / 2 + 50, height / 2), -30),
     new Carga(createVector(width / 2, height / 2 - 50), -1),
   ];
+
   // Inicializacion de controles
   lineasSlider = createSlider(0, 5000, cantLineas, 100);
-  lineasSlider.position(10, 10);
+  lineasSlider.position(10, height - 50);
 
   resSlider = createSlider(0, 50, res, 1);
-  resSlider.position(10, 50);
+  resSlider.position(lineasSlider.width * 2 - 25, height - 50);
 
   cargaSlider = createSlider(-50, 50, cargas[1].charge, 1);
-  cargaSlider.position(10, 100);
+  cargaSlider.position(10, 50);
   cargaSlider.hide();
 }
 
@@ -112,13 +113,18 @@ class Carga {
 
   mostrarTexto() {
     push();
-    textSize(32);
+    textSize(26);
     fill(255);
     text(
       this.charge,
-      cargaSlider.x * 2 + cargaSlider.width,
+      cargaSlider.x + cargaSlider.width + 10,
       cargaSlider.y + 20
     );
+    pop();
+    push();
+    textSize(15);
+    fill(255);
+    text('Carga', cargaSlider.x, cargaSlider.y - 10);
     pop();
   }
 
@@ -151,19 +157,25 @@ const hideControls = () => {
 
 const mostrarTextoControles = () => {
   push();
-  textSize(32);
+  textSize(26);
   fill(255);
-  text(res, resSlider.x * 2 + resSlider.width, resSlider.y + 20);
+  text(res, resSlider.x + resSlider.width + 10, resSlider.y + 20);
   text(
     cantLineas,
-    lineasSlider.x * 2 + lineasSlider.width,
+    lineasSlider.x + lineasSlider.width + 10,
     lineasSlider.y + 20
   );
+  pop();
+  push();
+  textSize(15);
+  fill(255);
+  text('Cantidad de lineas', lineasSlider.x, lineasSlider.y - 10);
+  text('Largo de lineas', resSlider.x, resSlider.y - 10);
   pop();
 };
 
 // Eventos
-function touchStarted() {
+function mousePressedOnCanvas() {
   cargas.forEach((q) => {
     if (q.isPressed()) {
       q.updateControls();

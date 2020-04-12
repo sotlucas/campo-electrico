@@ -1,5 +1,5 @@
 let res = 20;
-let cantLineas = 100;
+let cantLineas = 2000;
 let cargaMuestra;
 let cargas;
 
